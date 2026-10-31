@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Student</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #fde2e4, #e2ece9, #dfe7fd);
+            background-attachment: fixed;
+            margin: 0;
+            padding: 30px;
+            min-height: 100vh;
+            color: #4a4a68;
+        }
+
+        .container {
+            max-width: 520px;
+            margin: 40px auto;
+            background: rgba(255, 255, 255, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(150, 140, 190, 0.25);
+        }
+
+        .school-name {
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #9b8bc4;
+            margin-bottom: 6px;
+        }
+
+        h1 {
+            margin: 0 0 25px 0;
+            padding-bottom: 18px;
+            border-bottom: 2px dashed #d8c9ee;
+            font-size: 26px;
+            color: #5b4b8a;
+        }
+
+        .error {
+            background-color: #ffe3e8;
+            color: #a14458;
+            border: 1px solid #ffd0d9;
+            padding: 10px 14px;
+            border-radius: 12px;
+            margin: 0 0 18px 0;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            font-size: 14px;
+            color: #6b5b95;
+        }
+
+        input {
+            width: 100%;
+            padding: 11px 18px;
+            border: 1px solid #d8c9ee;
+            border-radius: 25px;
+            font-size: 14px;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #4a4a68;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input:hover {
+            border-color: #bfaee0;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #a9c9ff;
+            box-shadow: 0 0 0 3px rgba(169, 201, 255, 0.4);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 11px 22px;
+            border-radius: 25px;
+            text-decoration: none;
+            color: #3d3566;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(150, 140, 190, 0.35);
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        .btn-edit {
+            background-color: #a9c9ff;
+        }
+
+        .btn-back {
+            background-color: #ffd6e0;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-top: 25px;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+
+            .container {
+                padding: 22px;
+                margin: 10px auto;
+            }
+
+            .form-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="school-name">Green Valley Academy</div>
+        <h1>Edit Student</h1>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label>Name:</label>
+                <input type="text" name="name" value="{{ student.name }}" required>
+            </div>
+
+            <div class="form-group">
+                <label>Age:</label>
+                <input type="number" name="age" value="{{ student.age }}" required>
+            </div>
+
+            <div class="form-group">
+                <label>Email:</label>
+                <input type="email" name="email" value="{{ student.email }}" required>
+            </div>
+
+            <div class="form-group">
+                <label>Course:</label>
+                <input type="text" name="course" value="{{ student.course }}" required>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-edit">Update Student</button>
+                <a href="{% url 'student_list' %}" class="btn btn-back">← Back to Student List</a>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
