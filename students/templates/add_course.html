@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Course</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #fde2e4, #e2ece9, #dfe7fd);
+            background-attachment: fixed;
+            margin: 0;
+            min-height: 100vh;
+            color: #4a4a68;
+        }
+
+        /* ---------- Navbar ---------- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 50px;
+            background: linear-gradient(135deg, #cdb4f6, #a9c9ff, #b5ead7);
+            box-shadow: 0 4px 16px rgba(150, 140, 190, 0.3);
+        }
+
+        .brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: #3d3566;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #3d3566;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            padding: 6px 4px;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .nav-links a:hover {
+            border-bottom-color: #3d3566;
+        }
+
+        /* ---------- Form card ---------- */
+        .form-card {
+            max-width: 480px;
+            margin: 40px auto;
+            background: rgba(255, 255, 255, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(150, 140, 190, 0.25);
+        }
+
+        .eyebrow {
+            margin: 0 0 6px 0;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #9b8bc4;
+        }
+
+        .form-card h2 {
+            margin: 0 0 25px 0;
+            padding-bottom: 18px;
+            border-bottom: 2px dashed #d8c9ee;
+            font-size: 26px;
+            color: #5b4b8a;
+        }
+
+        .error-msg {
+            background-color: #ffe3e8;
+            color: #a14458;
+            border: 1px solid #ffd0d9;
+            padding: 10px 14px;
+            border-radius: 12px;
+            margin: 0 0 18px 0;
+            font-size: 14px;
+        }
+
+        .styled-form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .styled-form input {
+            width: 100%;
+            padding: 12px 18px;
+            border: 1px solid #d8c9ee;
+            border-radius: 25px;
+            font-size: 14px;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #4a4a68;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .styled-form input::placeholder {
+            color: #b0a4cc;
+        }
+
+        .styled-form input:hover {
+            border-color: #bfaee0;
+        }
+
+        .styled-form input:focus {
+            outline: none;
+            border-color: #a9c9ff;
+            box-shadow: 0 0 0 3px rgba(169, 201, 255, 0.4);
+        }
+
+        .styled-form button {
+            margin-top: 8px;
+            padding: 12px 22px;
+            border: none;
+            border-radius: 25px;
+            background-color: #b5ead7;
+            color: #3d3566;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .styled-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(150, 140, 190, 0.35);
+        }
+
+        .styled-form button:active {
+            transform: scale(0.97);
+        }
+
+        /* ---------- Mobile ---------- */
+        @media (max-width: 700px) {
+            .navbar {
+                flex-direction: column;
+                gap: 12px;
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 14px;
+            }
+
+            .form-card {
+                padding: 22px;
+                margin: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="{% url 'home' %}" class="brand">🎓 Student Management</a>
+
+        <div class="nav-links">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'student_list' %}">Students</a>
+            <a href="{% url 'courses' %}">Courses</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+    </nav>
+
+    <div class="form-card">
+        <p class="eyebrow">Green Valley Academy</p>
+        <h2>Add Course</h2>
+
+        {% if error %}
+        <p class="error-msg">{{ error }}</p>
+        {% endif %}
+
+        <form method="POST" class="styled-form">
+            {% csrf_token %}
+
+            <input type="text" name="course_name"
+                   placeholder="Course Name" required>
+
+            <input type="text" name="duration"
+                   placeholder="Duration" required>
+
+            <button type="submit">Add Course</button>
+        </form>
+    </div>
+
+</body>
+</html>
